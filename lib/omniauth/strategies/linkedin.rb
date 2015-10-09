@@ -8,11 +8,9 @@ module OmniAuth
 
       # This is where you pass the options you would pass when
       # initializing your consumer from the OAuth gem.
-      option :client_options, {
-        :site => 'https://api.linkedin.com',
-        :authorize_url => 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code',
-        :token_url => 'https://www.linkedin.com/uas/oauth2/accessToken'
-      }
+      option :client_options,         site: 'https://api.linkedin.com',
+                                      authorize_url: 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code',
+                                      token_url: 'https://www.linkedin.com/uas/oauth2/accessToken'
 
       option :scope, 'r_basicprofile r_emailaddress'
       option :fields, ['id', 'email-address', 'first-name', 'last-name', 'headline', 'location', 'industry', 'picture-url', 'public-profile-url']
@@ -26,15 +24,15 @@ module OmniAuth
 
       info do
         {
-          :name => user_name,
-          :email => raw_info['emailAddress'],
-          :nickname => user_name,
-          :first_name => raw_info['firstName'],
-          :last_name => raw_info['lastName'],
-          :location => raw_info['location'],
-          :description => raw_info['headline'],
-          :image => raw_info['pictureUrl'],
-          :urls => {
+          name: user_name,
+          email: raw_info['emailAddress'],
+          nickname: user_name,
+          first_name: raw_info['firstName'],
+          last_name: raw_info['lastName'],
+          location: raw_info['location'],
+          description: raw_info['headline'],
+          image: raw_info['pictureUrl'],
+          urls: {
             'public_profile' => raw_info['publicProfileUrl']
           }
         }
@@ -44,15 +42,13 @@ module OmniAuth
         { 'raw_info' => raw_info }
       end
 
-      alias :oauth2_access_token :access_token
+      alias_method :oauth2_access_token, :access_token
 
       def access_token
-        ::OAuth2::AccessToken.new(client, oauth2_access_token.token, {
-          :mode => :query,
-          :param_name => 'oauth2_access_token',
-          :expires_in => oauth2_access_token.expires_in,
-          :expires_at => oauth2_access_token.expires_at
-        })
+        ::OAuth2::AccessToken.new(client, oauth2_access_token.token,           mode: :query,
+                                                                               param_name: 'oauth2_access_token',
+                                                                               expires_in: oauth2_access_token.expires_in,
+                                                                               expires_at: oauth2_access_token.expires_at)
       end
 
       def raw_info
@@ -63,7 +59,7 @@ module OmniAuth
 
       def option_fields
         fields = options.fields
-        fields.map! { |f| f == "picture-url" ? "picture-url;secure=true" : f } if !!options[:secure_image_url]
+        fields.map! { |f| f == 'picture-url' ? 'picture-url;secure=true' : f } if options[:secure_image_url]
         fields
       end
 

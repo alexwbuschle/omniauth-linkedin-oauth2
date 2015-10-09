@@ -22,7 +22,7 @@ class App < Sinatra::Base
   end
 end
 
-use Rack::Session::Cookie, :secret => 'change_me'
+use Rack::Session::Cookie, secret: 'change_me'
 
 use OmniAuth::Builder do
   provider :linkedin, ENV['LINKEDIN_KEY'], ENV['LINKEDIN_SECRET']
