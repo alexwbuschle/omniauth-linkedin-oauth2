@@ -1,12 +1,8 @@
 require 'spec_helper'
 require 'omniauth-linkedin-oauth2'
 
-describe OmniAuth::Strategies::LinkedIn do
-  subject { OmniAuth::Strategies::LinkedIn.new(nil) }
-
-  it 'should add a camelization for itself' do
-    expect(OmniAuth::Utils.camelize('linkedin')).to eq('LinkedIn')
-  end
+describe OmniAuth::Strategies::LinkedInOAuth2 do
+  subject { OmniAuth::Strategies::LinkedInOAuth2.new(nil) }
 
   describe '#client' do
     it 'has correct LinkedIn site' do
@@ -24,7 +20,7 @@ describe OmniAuth::Strategies::LinkedIn do
 
   describe '#callback_path' do
     it 'has the correct callback path' do
-      expect(subject.callback_path).to eq('/auth/linkedin/callback')
+      expect(subject.callback_path).to eq('/auth/linkedin_oauth2/callback')
     end
   end
 
