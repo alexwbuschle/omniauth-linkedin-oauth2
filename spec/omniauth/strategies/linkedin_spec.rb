@@ -91,7 +91,7 @@ describe OmniAuth::Strategies::LinkedIn do
   describe '#authorize_params' do
     describe 'scope' do
       before :each do
-        subject.stub(session: {})
+        allow(subject).to receive_messages(session: {})
       end
 
       it 'sets default scope' do
@@ -102,18 +102,18 @@ describe OmniAuth::Strategies::LinkedIn do
 
   describe '#option_fields' do
     it 'returns options fields' do
-      subject.stub(options: double('options', fields: %w(foo bar)).as_null_object)
+      allow(subject).to receive_messages(options: double('options', fields: %w(foo bar)).as_null_object)
       expect(subject.send(:option_fields)).to eq(%w(foo bar))
     end
 
     it 'http avatar image by default' do
-      subject.stub(options: double('options', fields: ['picture-url']))
+      allow(subject).to receive_messages(options: double('options', fields: ['picture-url']))
       allow(subject.options).to receive(:[]).with(:secure_image_url).and_return(false)
       expect(subject.send(:option_fields)).to eq(['picture-url'])
     end
 
     it 'https avatar image if secure_image_url truthy' do
-      subject.stub(options: double('options', fields: ['picture-url']))
+      allow(subject).to receive_messages(options: double('options', fields: ['picture-url']))
       allow(subject.options).to receive(:[]).with(:secure_image_url).and_return(true)
       expect(subject.send(:option_fields)).to eq(['picture-url;secure=true'])
     end
